@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @unique
+
+  name     String
+  cpf      String @unique
+  email    String @unique
+  idade    Int
+  role     String
+  password String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  profile Profiles[]
+
+  @@map("user")
+}
+
+model Movie {
+  id String @id @unique
+
+  title       String
+  description String
+  avaliation  Float
+  image       String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  profile Profiles[]
+
+  @@map("movie")
+}
+
+model Serie {
+  id String @id @unique
+
+  title       String
+  description String
+  avaliation  Float
+  image       String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  profile Profiles[]
+
+  @@map("serie")
+}
+
+model Anime {
+  id String @id @unique
+
+  title       String
+  description String
+  avaliation  Float
+  image       String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  profile Profiles[]
+
+  @@map("anime")
+}
+
+model Profiles {
+  id String @id @unique
+
+  user   User   @relation(fields: [userEmail], references: [email])
+  userEmail String @map("user_email")
+
+  movie Movie[]
+  serie Serie[]
+  anime Anime[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+}
